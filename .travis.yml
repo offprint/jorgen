@@ -4,8 +4,15 @@ python:
   - "2.7"
   - "3.2"
   - "3.3"
+
+before_install:
+  - date
+  - curl -L https://github.com/krlmlr/texlive-squashfs/raw/master/out/texlive.tar.xz | tar -JxC ~
+  - date
+
 # command to install dependencies
 install:
+  - PATH=$HOME/texlive/bin/x86_64-linux:$PATH
   - pip install -r requirements.txt --use-mirrors
 
 # command to run tests
