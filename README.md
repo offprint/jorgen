@@ -44,7 +44,7 @@ Change the volume number and pages. Also you may want to open up
 Jorgen.py and edit the user_name
 
 ```sh
-make VOL=1 PAGES=10 USER_NAME="Your Name" USER_EMAIL="Your Email
+make VOL=1 PAGES=10 USER_NAME="Your Name" USER_EMAIL="Your Email"
 ```
 
 ## TODO
