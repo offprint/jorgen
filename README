@@ -36,19 +36,32 @@ where ever you want them.
 
 ## Using Jorgen
 
-### Examples
+The Makefile associated with Jorgen has a few different options to
+allow you to quickly generate your notebook. The easiest way to get
+started is with this command.
 
-### Templates for Jorgen
+Change the volume number and pages. Also you may want to open up
+Jorgen.py and edit the user_name
 
-#### Currently available
-
-#### Future
-
-#### Creating your own Templates
-
-### Hacking Jorgen
+```sh
+make VOL=1 PAGES=10 USER_NAME="Your Name" USER_EMAIL="Your Email
+```
 
 ## TODO
+
+### Command Line Menu for setting options
+
+Jorgen needs some sort of menu to set various LaTeX, and markup
+options, as well as preferences associated with printing.
+
+### Tutorial on Creating your own Templates
+
+A tutorial on how to create your own templates would be useful - this
+can be accomplished by moving template settings out of the main
+generator into a seperate file.
+
+With a seperate template file, templates could be quickly parsed by
+the generator to output the resulting notebook.
 
 ### Handwritten Text Recognition
 
