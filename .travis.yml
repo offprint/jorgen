@@ -6,4 +6,8 @@ python:
   - "3.3"
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
+  - pip install . --use-mirrors
+  - pip install -r requirements.txt --use-mirrors
+
+# command to run tests
+script: make VOL=1 PAGES=5 USER_NAME="BLANK" USER_EMAIL="BLANK"
