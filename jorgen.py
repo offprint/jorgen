@@ -174,7 +174,7 @@ def notepage(page_stamp, qr_handle):
             r'\SetBgOpacity{1}',
             r'\SetBgPosition{current page.south}',
             r'\mbox{}',
-            r'\LLCornerWallPaper{1.02}{jorgen.eps}',
+            r'\LLCornerWallPaper{1.02}{grid.eps}',
             r'\SetBgVshift{0.5cm}',
             r'\SetBgContents{' + page_stamp + r'}',
             r'\LRCornerWallPaper{0.09}{' + qr_handle + '}')
