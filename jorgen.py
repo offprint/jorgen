@@ -68,9 +68,9 @@ def ref_file(page_stamp, img_dir):
 
     return fill
 
-def support_files(date, page_stamp, notebook_markup_files, img_dir):
-    fn = date + page_stamp + notebook_markup_format
-    mkd_file = os.path.join(notebook_markup_files, fn)
+def support_files(date, page_stamp, notebook_markup_dir, img_dir):
+    fn = date + page_stamp + '.' + notebook_markup_format
+    mkd_file = os.path.join(notebook_markup_dir, fn)
     if not os.path.isfile(mkd_file):
         with open(mkd_file, mode='w') as outfile:
             fill = ref_file(page_stamp, img_dir)
@@ -95,10 +95,8 @@ def support_files(date, page_stamp, notebook_markup_files, img_dir):
 ##| user_email
 ##`-=========================================================-
 
-def preface(vol_no):
+def preface(vol_no, user_name, user_email):
     # the date the notebook was created
-    user_name = 'Anton Strilchuk'
-    user_email = 'anton@isotyp.pe'
     est_date = datetime.date.today().strftime('%B %Y')
     preamble = (r'\documentclass{article}',
                 r'\usepackage[paperheight=9.5in,paperwidth=7.31in]{geometry}',
@@ -155,10 +153,10 @@ def toc_lines(stamps):
 ##,-========-
 ##| APP LINK
 ##`-========-
-def qr(date, page_stamp, notebook_markup_files):
+def qr(date, page_stamp, notebook_markup_dir):
     qr_handle = ''.join(('qr_', page_stamp, '.png'))
-    fn = date + page_stamp + notebook_markup_format
-    qr_path = os.path.join(notebook_markup_files, fn)
+    fn = date + page_stamp + '.' + notebook_markup_format
+    qr_path = os.path.join(notebook_markup_dir, fn)
     img_link = ''.join(('textastic://x-callback-url/open?path=notebook&name=', qr_path))
     img = qrcode.make(img_link)
     img.save(qr_handle)
@@ -176,7 +174,7 @@ def notepage(page_stamp, qr_handle):
             r'\SetBgOpacity{1}',
             r'\SetBgPosition{current page.south}',
             r'\mbox{}',
-            r'\LLCornerWallPaper{1.02}{notebook.eps}',
+            r'\LLCornerWallPaper{1.02}{jorgen.eps}',
             r'\SetBgVshift{0.5cm}',
             r'\SetBgContents{' + page_stamp + r'}',
             r'\LRCornerWallPaper{0.09}{' + qr_handle + '}')
@@ -199,30 +197,30 @@ def end():
 ##,-====-
 ##| MAIN
 ##`-====-
-def main(notebook_markup_files, img_dir, vol, pages):
+def main(notebook_markup_dir, img_dir, vol, pages, user_name, user_email):
     volume_number = int(vol)
     pages = int(pages)
     date = datetime.datetime.today().strftime('%Y-%m-%d-')
 
     stamps = page_stamps(volume_number, pages)
-    [support_files(date, stamp, notebook_markup_files, img_dir) for stamp in stamps]
+    [support_files(date, stamp, notebook_markup_dir, img_dir) for stamp in stamps]
 
-    with open('notebook.tex', mode='w') as outfile:
-        add_preface = preface(vol)
+    with open('jorgen.tex', mode='w') as outfile:
+        add_preface = preface(volume_number, user_name, user_email)
         add_tableofcontents = toc_lines(stamps)
         aggregate = add_preface + add_tableofcontents
         outfile.write(aggregate)
         for stamp in stamps:
-            add_qr = qr(date, stamp, notebook_markup_files)
-            add_qr_to_pages = notepage(stamp, q)
+            add_qr = qr(date, stamp, notebook_markup_dir)
+            add_qr_to_pages = notepage(stamp, add_qr)
             outfile.write(add_qr_to_pages)
         put_everything_together = end()
         outfile.write(put_everything_together)
 
 if __name__ == '__main__':
-    (notebook_markup_files, img_dir, vol, pages) = sys.argv[1:5]
-    main(notebook_markup_files, img_dir, vol, pages)
+    (notebook_markup_dir, img_dir, vol, pages, user_name, user_email) = sys.argv[1:7]
+    main(notebook_markup_dir, img_dir, vol, pages, user_name, user_email)
 
 ##,-=====================-
-##| notebook.py ends here
+##| jorgen.py ends here
 ##`-=====================-
