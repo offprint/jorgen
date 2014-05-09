@@ -1,4 +1,4 @@
-# Jorgen
+![Jorgen](support_files/jorgen.png)
 
 Jorgen is a custom journal tool that creates a printable PDF journal
 that can be easily folded and bound at home.
